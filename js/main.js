@@ -48,6 +48,16 @@ var midi_to_freq ={
     48: 1046.50
 };
 
+var volume = document.querySelector('#volume');
+volume.addEventListener('input', function(e){
+    console.log("Volume: " + e.target.value);
+})
+
+var qfactor = document.querySelector('#qfactor');
+qfactor.addEventListener('input', function(e){
+    console.log("Qfactor: " + e.target.value);
+})
+
 synth.on('change', function Note(data) {
     var osc = Nexus.context.createOscillator();
     var amp = Nexus.context.createGain();

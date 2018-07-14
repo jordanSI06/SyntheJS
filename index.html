@@ -24,6 +24,9 @@
             <input type="radio" id="saw" name="type">
             <label for="saw">Sawtooth</label>
         </div>
+        <webaudio-knob id="volume" src="img/LittlePhatty.png" diameter="30" sprites="100" min="0" max="100"></webaudio-knob>
+        <webaudio-knob id="qfactor"src="img/LittlePhatty.png" diameter="30" sprites="100" min="0" max="100"></webaudio-knob>
+
         <div id="screen">
             <div id="osci"></div>
         </div>
@@ -33,10 +36,12 @@
     
     
 
-    
+     
+   
 
     <script src="js/nexusAPI.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js" ></script>
 </body>
 
 </html>
