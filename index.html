@@ -13,19 +13,27 @@
 <body>
     <h1>SyntheJS</h1>
 
-    <div id="synth"></div>
-    <div id="osci"></div>
-
-    <div>
-        <input type="radio" id="sine" name="type" checked>
-        <label for="sine">Sine</label>
-        <input type="radio" id="triangle" name="type">
-        <label for="triangle">Triangle</label>
-        <input type="radio" id="square" name="type">
-        <label for="square">Square</label>
-        <input type="radio" id="saw" name="type">
-        <label for="saw">Sawtooth</label>
+    <div id="keyboard">
+        <div id="mode">
+            <input type="radio" id="sine" name="type" checked>
+            <label for="sine">Sine</label>
+            <input type="radio" id="triangle" name="type">
+            <label for="triangle">Triangle</label>
+            <input type="radio" id="square" name="type">
+            <label for="square">Square</label>
+            <input type="radio" id="saw" name="type">
+            <label for="saw">Sawtooth</label>
+        </div>
+        <div id="screen">
+            <div id="osci"></div>
+        </div>
+        
+        <div id="synth"></div>
     </div>
+    
+    
+
+    
 
     <script src="js/nexusAPI.js"></script>
     <script src="js/main.js"></script>

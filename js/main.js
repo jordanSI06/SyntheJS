@@ -5,7 +5,7 @@ var con = new audio_context();
 Nexus.context = con;
 
 var osci = new Nexus.Oscilloscope('#osci',{
-    'size': [300, 150]
+    'size': [175, 75]
 });
 
 var synth = new Nexus.Piano('#synth', {
