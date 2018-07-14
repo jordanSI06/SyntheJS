@@ -8,4 +8,4 @@ This project help me to understand and manipulate Audio Context, Web Audio and u
 
 # Tech Used
 
-HTML/CSS JS NexusUI 2.0, [find this tech here](https://nexus-js.github.io/ui/)
+HTML/CSS JS NexusUI 2.0, ( [find this tech here](https://nexus-js.github.io/ui/) ) and Web Audio Controller ( [find this tech here]  (https://github.com/g200kg/webaudio-controls))
