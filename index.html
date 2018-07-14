@@ -1,20 +1,34 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SyntheJS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-    
+
 </head>
+
 <body>
     <h1>SyntheJS</h1>
 
     <div id="synth"></div>
     <div id="osci"></div>
 
+    <div>
+        <input type="radio" id="sine" name="type" checked>
+        <label for="sine">Sine</label>
+        <input type="radio" id="triangle" name="type">
+        <label for="triangle">Triangle</label>
+        <input type="radio" id="square" name="type">
+        <label for="square">Square</label>
+        <input type="radio" id="saw" name="type">
+        <label for="saw">Sawtooth</label>
+    </div>
+
     <script src="js/nexusAPI.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>

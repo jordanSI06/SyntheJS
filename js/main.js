@@ -15,10 +15,10 @@ var synth = new Nexus.Piano('#synth', {
     'highNote': 49
 });
 
-/*var sine=document.getElementById("sine");
+var sine=document.getElementById("sine");
 var triangle=document.getElementById("triangle");
 var square=document.getElementById("square");
-var saw=document.getElementById("saw");*/
+var saw=document.getElementById("saw");
 
 var midi_to_freq ={
     24: 261.63,
@@ -58,7 +58,7 @@ synth.on('change', function Note(data) {
     osc.connect(amp);
     osci.connect(amp); //Visualize the wave
     
-    /*if(sine.checked == true){
+    if(sine.checked == true){
         osc.type='sine';
     }
     else if(triangle.checked == true){
@@ -72,7 +72,7 @@ synth.on('change', function Note(data) {
     }
     else{
         alert("Erreur. Aucun type selectionné");
-    }*/
+    }
     
     amp.connect(con.destination);
     osc.start();
