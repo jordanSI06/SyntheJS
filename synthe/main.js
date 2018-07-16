@@ -1,6 +1,8 @@
 var audio_context = window.AudioContext || window.webkitAudioContext; //depending of device
 var con = new audio_context();
 
+var Nexus
+
 var osci = new Nexus.Oscilloscope('#osci',{
     'size': [120, 30]
 });
@@ -42,23 +44,32 @@ var midi_to_freq ={
 };
 
 var volume = document.querySelector('#volume');
-volume.addEventListener('input', function(e){
-    console.log("Volume: " + e.target.value);
-})
+
 
 var qfactor = document.querySelector('#qfactor');
 qfactor.addEventListener('input', function(e){
     console.log("Qfactor: " + e.target.value);
 })
 
+volume.addEventListener('input', function(e){
+    var vol= e.target.value/1000;
+    console.log(vol);
+    return vol;
+})
+var volu = vol;
+
 synth.addEventListener('change', function Note(data) {
-    var osc = con.createOscillator();
-    var amp = con.createGain();
-    var now = con.currentTime; //Timer of program
-    amp.gain.value = 0.3; // 0.05 to have smooth sound
-    amp.gain.linearRampToValueAtTime(0.3, now + 0.3); //increase amp.gain.valiue (0) to 0.1 after 2 sec
-    amp.gain.linearRampToValueAtTime(0, now + 0.5); //increase amp.gain.valiue (0.1) to 0 after 4 sec
+    
+    var osc = Nexus.context.createOscillator();
+    var amp = Nexus.context.createGain();
+    var now = Nexus.context.currentTime; //Timer of program
+    
+    
+    amp.gain.value=vol;
+ 
+    amp.gain.linearRampToValueAtTime(0, now + 3); //increase amp.gain.valiue (0.1) to 0 after 4 sec
     osc.connect(amp);
+    osci.connect(amp);
    
     
     if(sine.checked == true){
@@ -76,10 +87,15 @@ synth.addEventListener('change', function Note(data) {
     else{
         console.log("Erreur. Aucun type selectionné");
     }
-    
-    amp.connect(con.destination);
+
+    amp.connect(Nexus.context.destination);
+    if(data.note[0] == 1){
         osc.start();
-        osc.stop(now +0.5); //just after the end of ramp
+        osc.stop(now +3); //just after the end of ramp
+    }
+    
+    
+        
    console.log (data.note);
     osc.frequency.value= midi_to_freq[data.note[1]]
     console.log(osc.frequency.value);
