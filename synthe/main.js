@@ -1,7 +1,7 @@
 var audio_context = window.AudioContext || window.webkitAudioContext; //depending of device
 var con = new audio_context();
 
-var Nexus
+
 
 var osci = new Nexus.Oscilloscope('#osci',{
     'size': [120, 30]
@@ -52,11 +52,9 @@ qfactor.addEventListener('input', function(e){
 })
 
 volume.addEventListener('input', function(e){
-    var vol= e.target.value/1000;
-    console.log(vol);
-    return vol;
+    amp.gain.value= e.target.value/1000;
+
 })
-var volu = vol;
 
 synth.addEventListener('change', function Note(data) {
     
@@ -64,8 +62,7 @@ synth.addEventListener('change', function Note(data) {
     var amp = Nexus.context.createGain();
     var now = Nexus.context.currentTime; //Timer of program
     
-    
-    amp.gain.value=vol;
+   
  
     amp.gain.linearRampToValueAtTime(0, now + 3); //increase amp.gain.valiue (0.1) to 0 after 4 sec
     osc.connect(amp);
