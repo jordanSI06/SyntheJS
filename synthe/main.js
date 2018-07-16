@@ -81,7 +81,7 @@ synth.on('change', function Note(data) {
         osc.type='sawtooth';
     }
     else{
-        alert("Erreur. Aucun type selectionné");
+        console.log("Erreur. Aucun type selectionné");
     }
     
     amp.connect(con.destination);
