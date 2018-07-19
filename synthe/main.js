@@ -1,8 +1,6 @@
 var audio_context = window.AudioContext || window.webkitAudioContext; //depending of device
 var con = new audio_context();
 
-
-
 var osci = new Nexus.Oscilloscope('#osci',{
     'size': [120, 30]
 });
@@ -51,21 +49,30 @@ qfactor.addEventListener('input', function(e){
     console.log("Qfactor: " + e.target.value);
 })
 
-volume.addEventListener('input', function(e){
-    amp.gain.value= e.target.value/1000;
 
-})
 
 synth.addEventListener('change', function Note(data) {
-    
     var osc = Nexus.context.createOscillator();
     var amp = Nexus.context.createGain();
-    var now = Nexus.context.currentTime; //Timer of program
+    var now = con.currentTime;
+    if(data.note[0] == 1){
+        osc.connect(amp);
+    }
+
+    if(data.note[0] == 0){
+        osc.disconnect();
+        amp.gain.value=0;
+    }
+    
+    
+    
+    
+    amp.gain.value=1;
+    amp.gain.linearRampToValueAtTime(0, now+1)
+    
     
    
- 
-    amp.gain.linearRampToValueAtTime(0, now + 3); //increase amp.gain.valiue (0.1) to 0 after 4 sec
-    osc.connect(amp);
+    
     osci.connect(amp);
    
     
@@ -86,11 +93,9 @@ synth.addEventListener('change', function Note(data) {
     }
 
     amp.connect(Nexus.context.destination);
-    if(data.note[0] == 1){
-        osc.start();
-        osc.stop(now +3); //just after the end of ramp
-    }
-    
+    osc.start();
+
+  
     
         
    console.log (data.note);
