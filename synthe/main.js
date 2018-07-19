@@ -1,6 +1,8 @@
 var audio_context = window.AudioContext || window.webkitAudioContext; //depending of device
 var con = new audio_context();
 var amp = Nexus.context.createGain();
+
+amp.gain.value=0.2;
 var osci = new Nexus.Oscilloscope('#osci',{
     'size': [120, 30]
 });
@@ -43,8 +45,8 @@ var midi_to_freq ={
 
 var volume = document.querySelector('#volume');
 volume.addEventListener('input', function(e){
-    volume.setAttribute('value', e.target.value);
-    amp.gain.value=e.target.value/100;
+ 
+    amp.gain.value=e.target.value/1000;
     console.log("Volume: " + volume.value);
 })
 
@@ -69,9 +71,8 @@ synth.addEventListener('change', function Note(data) {
         amp.gain.value=0;
     }
     
-    
-    amp.gain.value=volume.value/100;
-    //amp.gain.linearRampToValueAtTime(0, now+1)
+    amp.gain.linearRampToValueAtTime(0, now+1)
+ 
     
     
    
