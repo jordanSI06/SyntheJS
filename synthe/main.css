@@ -1,6 +1,6 @@
-#keyboard{
+#synth{
     width: 520px;
-    height: 250px;
+    height: 210px;
     position: relative;
     background-color: rgb(255, 190, 50);
     padding: 30px;
@@ -11,9 +11,9 @@
     float: right;
 }
 
-#synth{
-    position: absolute;
-    bottom: 10px;
+#keyboard{
+    position: relative;
+    top: 50px;
     margin: 0 auto;
     align-content: center;
 }

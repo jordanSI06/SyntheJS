@@ -2,12 +2,23 @@ var audio_context = window.AudioContext || window.webkitAudioContext; //dependin
 var con = new audio_context();
 var amp = Nexus.context.createGain();
 
+var keyboard= new QwertyHancock({
+    id: 'keyboard',
+    width: 520,
+    height: 125,
+    octave: 2,
+    startNote: 'C3',
+    whiteNotesColour: 'white',
+    blackNotesColour: 'black',
+    hoverColour: '#f3e939'
+});
+
 amp.gain.value=0.2;
 var osci = new Nexus.Oscilloscope('#osci',{
     'size': [120, 30]
 });
 
-var synth = document.querySelector("#synth")
+var synth = document.querySelector("#keyboard")
 
 
 var sine=document.getElementById("sine");
