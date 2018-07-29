@@ -1,8 +1,12 @@
-var audio_context = window.AudioContext || window.webkitAudioContext; //depending of device
-var con = new audio_context();
-var amp = Nexus.context.createGain();
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-var keyboard= new QwertyHancock({
+
+var context = new AudioContext();
+var nexusGain = Nexus.context.createGain();
+var masterGain = context.createGain();
+var nodes = [];
+
+var keyboard = new QwertyHancock({
     id: 'keyboard',
     width: 520,
     height: 125,
@@ -13,109 +17,39 @@ var keyboard= new QwertyHancock({
     hoverColour: '#f3e939'
 });
 
-amp.gain.value=0.2;
-var osci = new Nexus.Oscilloscope('#osci',{
+var osci = new Nexus.Oscilloscope('#osci', {
     'size': [120, 30]
 });
 
-var synth = document.querySelector("#keyboard")
+var sine = document.getElementById("sine");
+var triangle = document.getElementById("triangle");
+var square = document.getElementById("square");
+var saw = document.getElementById("saw");
 
+masterGain.value = 0.3;
+masterGain.connect(context.destination);
 
-var sine=document.getElementById("sine");
-var triangle=document.getElementById("triangle");
-var square=document.getElementById("square");
-var saw=document.getElementById("saw");
+keyboard.keyDown = function (note, frequency) {
+    var osc = context.createOscillator();
+    osc.type= 'square'
+    osc.frequency.value = frequency;
+    osc.connect(masterGain);
+    osc.start(0);
 
-var midi_to_freq ={
-    0: 261.63,
-    1: 277.18,
-    2: 293.66,
-    3: 311.13,
-    4: 329.63,
-    5: 349.23,
-    6: 369.99,
-    7: 392,
-    8: 415.30,
-    9: 440,
-    10: 466.16,
-    11: 493.88,
-    12: 523.25,
-    13: 554.37,
-    14: 587.33,
-    15: 622.25,
-    16: 659.26,
-    17: 698.46,
-    18: 739.99,
-    19: 783.99,
-    20: 830.61,
-    21: 880,
-    22: 932.33,
-    23: 987.77,
-    24: 1046.50
+    nodes.push(osc);
+}
+
+keyboard.keyUp = function (note, frequency) {
+    var new_nodes = [];
+
+    for (var i = 0; i < nodes.length; i++) {
+        if (Math.round(nodes[i].frequency.value) === Math.round(frequency)) {
+            nodes[i].stop(0);
+            nodes[i].disconnect();
+        } else {
+            new_nodes.push(nodes[i]);
+        }
+    }
+
+    nodes = new_nodes;
 };
-
-var volume = document.querySelector('#volume');
-volume.addEventListener('input', function(e){
- 
-    amp.gain.value=e.target.value/1000;
-    console.log("Volume: " + volume.value);
-})
-
-
-var qfactor = document.querySelector('#qfactor');
-qfactor.addEventListener('input', function(e){
-    console.log("Qfactor: " + e.target.value);
-})
-
-
-
-synth.addEventListener('change', function Note(data) {
-    var osc = Nexus.context.createOscillator();
-    
-    var now = con.currentTime;
-    if(data.note[0] == 1){
-        osc.connect(amp);
-    }
-
-    if(data.note[0] == 0){
-        osc.disconnect();
-        amp.gain.value=0;
-    }
-    
-    amp.gain.linearRampToValueAtTime(0, now+1)
- 
-    
-    
-   
-    
-    osci.connect(amp);
-   
-    
-    if(sine.checked == true){
-        osc.type='sine';
-    }
-    else if(triangle.checked == true){
-        osc.type='triangle';
-    }
-    else if(square.checked == true){
-        osc.type='square';
-    }
-    else if(saw.checked == true){
-        osc.type='sawtooth';
-    }
-    else{
-        console.log("Erreur. Aucun type selectionné");
-    }
-
-    amp.connect(Nexus.context.destination);
-    osc.start();
-
-  
-    
-        
-   console.log (data.note);
-    osc.frequency.value= midi_to_freq[data.note[1]]
-    console.log(osc.frequency.value);
-})
-
-
